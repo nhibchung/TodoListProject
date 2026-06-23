@@ -12,6 +12,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application files
 COPY --chown=user . .
 
+# Ensure the app directory is writable by user
+RUN chmod -R u+w /home/user/app
+
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
