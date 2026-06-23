@@ -1,0 +1,4 @@
+Django==6.0.6
+uvicorn==0.49.0
+whitenoise==6.9.0
+
