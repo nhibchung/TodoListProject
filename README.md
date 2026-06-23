@@ -1,3 +1,14 @@
+---
+title: Todo List App
+emoji: 🚀
+color: blue
+sdk: docker
+sdk_version: 29.5.3
+python_version: 3.13.5
+app_file: app.py
+pinned: false
+---
+
 # TodoListProject
 
 A simple Django todo app.
