@@ -1,19 +1,28 @@
-FROM python:3.10
+FROM python:3.13-slim
 
-# Set working directory
-WORKDIR /code
+# Set up a new user with UID 1000 to be compatible with Hugging Face Spaces
+RUN useradd -m -u 1000 user
 
-# Copy and install requirements
-COPY ./requirements.txt /code/requirements.txt
-RUN pip install --no-cache-dir --r /code/requirements.txt
+WORKDIR /home/user/app
 
-# Copy the rest of your application code
-COPY . .
+# Install dependencies as root (simpler, installs to global site-packages)
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the default port Hugging Face looks for
+# Copy the rest of the application files
+COPY --chown=user . .
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# Switch to non-root user
+USER user
+
+# Run database migrations and collect static files (now django is available globally)
+RUN python manage.py migrate --noinput
+RUN python manage.py collectstatic --noinput
+
 EXPOSE 7860
 
-# Run the server (replace 'myproject' with your actual project folder name)
-CMD ["gunicorn", "--bind", "0.0.0.0:7860", "myproject.wsgi:application"]
-
-
+CMD ["uvicorn", "TodoListProject.asgi:application", "--host", "0.0.0.0", "--port", "7860"]
