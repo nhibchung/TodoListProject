@@ -12,8 +12,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application files
 COPY --chown=user . .
 
-# Create a writable data directory for SQLite database
-RUN mkdir -p /home/user/app/data && chown -R user:user /home/user/app/data
+# Create writable directories for data and static files
+RUN mkdir -p /home/user/app/data /home/user/app/staticfiles && \
+    chown -R user:user /home/user/app/data /home/user/app/staticfiles
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
