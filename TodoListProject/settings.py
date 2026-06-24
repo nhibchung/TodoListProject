@@ -25,8 +25,14 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-x2r*i#qsasq0ve)+lp@
 
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split()
+#ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split()
 
+# For Hugging Face Spaces
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.hf.space',
+    'https://huggingface.co'
+]
 
 # Application definition
 
@@ -40,9 +46,7 @@ INSTALLED_APPS = [
     'TodoListApp',
 ]
 
-# CSRF and session settings for Spaces
-CSRF_TRUSTED_ORIGINS = ['https://*.hf.space']
-
+# CSRF settings for Spaces
 # Ensure CSRF middleware is active
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
