@@ -25,8 +25,6 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-x2r*i#qsasq0ve)+lp@
 
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-#ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split()
-
 # For Hugging Face Spaces
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
@@ -49,21 +47,17 @@ INSTALLED_APPS = [
 # Session/Cookie settings
 SESSION_COOKIE_SECURE = True  # HTTPS only on Spaces
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 # CSRF settings
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = False  # Must be False for JS access if using JS forms
-CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_AGE = 31449600
 
 # Disable CSRF middleware if it's truly unreliable in your setup
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware', # Disabled for Spaces
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
