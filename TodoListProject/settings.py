@@ -46,8 +46,19 @@ INSTALLED_APPS = [
     'TodoListApp',
 ]
 
-# CSRF settings for Spaces
-# Ensure CSRF middleware is active
+# Session/Cookie settings
+SESSION_COOKIE_SECURE = True  # HTTPS only on Spaces
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# CSRF settings
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False  # Must be False for JS access if using JS forms
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_AGE = 31449600
+
+# Disable CSRF middleware if it's truly unreliable in your setup
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,12 +67,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
-
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = None
-SESSION_COOKIE_SECURE = False
-SESSION_COOKIE_SAMESITE = None
 
 ROOT_URLCONF = 'TodoListProject.urls'
 
