@@ -11,7 +11,7 @@ pinned: false
 
 # TodoListProject
 
-A simple Django todo app.
+A simple Django todo app that can create, edit, delete, and resolve todos
 
 ## Setup
 
